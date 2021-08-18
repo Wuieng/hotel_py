@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>这是酒店管理员的主界面</h2>
+<form action="/logout" method="get">
+    <button name="hotel">注销</button>
+</form>
+<!--这里需要操作管理员管理的酒店信息和酒店的客房信息-->
+<!--用一个按钮决定是否修改-->
+<hr>
+<h2>查看或修改酒店信息</h2>
+<form  action="/manager/hotelact" >
+    <button name="HotelId" value="{{manager.HotelId}}">查看酒店信息</button>
+</form>
+<hr>
+<h2>查看或修改客房信息</h2>
+<form action="/manager/roomact">
+    <button name="HotelId" value="{{manager.HotelId}}">查看酒店客房信息</button>
+</form>
+
+
+<!--为了之后做多线程准备的-->
+<form >
+    <button name="start" >开抢</button>
+    <input name="Num" placeholder="补货量"   type="text" >
+    <button name="add" >补货</button>
+</form>
+<!--{% if rooms %}-->
+<!--    {%for room in rooms%}-->
+
+<!--    {%endfor%}-->
+<!--{% endif%}-->
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+</head>
+
+<body class="text-center" >
+<form class="form-signin" action="/login" method="post" >
+  <h1 class="h3 mb-3 font-weight-normal" >Please sign in</h1>
+
+  <label for="inputId" class="sr-only">ID</label>
+  <input type="text" id="inputId" name="Id" class="form-control" placeholder="Id" required="" autofocus="">
+  <br />
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" name="Password" class="form-control" placeholder="Password" required="">
+
+  <div class="checkbox mb-3">
+    <label>
+      身份<input type="radio" name="type" value="adm">管理员
+      <input type="radio" name="type" value="manager" checked="checked">酒店管理员
+    </label>
+
+  </div>
+
+  <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">登录</button>
+  <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+</form>
+    {% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+    {% endfor%}
+</body></html>

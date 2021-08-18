@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hotel</title>
+</head>
+<body>
+<h2>这是hotel信息页面，可以修改 </h2>
+
+{% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+{% endfor%}
+
+<form method="post" action="/manager/hotelupdate">
+<label  class="sr-only">酒店Id</label>
+    <input type="text" name="HotelId"  value="{{hotel.HotelId}}" readonly="readonly"> <br>
+
+<label  class="sr-only">酒店名</label>
+    <input type="text" name="HotelName"  value="{{hotel.Name}}" placeholder="客户名" > <br>
+
+<label  class="sr-only">酒店地址</label>
+    <input type="text" name="Address" value="{{hotel.Address}}" placeholder="酒店地址" > <br>
+
+
+<label  class="sr-only">手机号</label>
+    <input type="text" name="Phone" value="{{hotel.Phone}}"  placeholder="酒店手机号" > <br>
+
+<label  class="sr-only">简介</label>
+
+    <input type="text" name="Intro" value="{{hotel.Intro}}"  > <br>
+
+    <button name="confirm" value="{{hotel.HotelId}}">提交修改</button>
+
+</form>
+
+<form action="/logout">
+    <button name="back">注销</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>这是adm的主界面</h2>
+<form method="get" action="/logout">
+    <button name="hotel">注销</button>
+</form>
+<!--这里提供2个表单和按钮，一个注册管理员，一个增加酒店-->
+<h2>注册酒店管理员</h2>
+<form action="/admin/register">
+    <input type="text" name="Id" placeholder="酒店管理员Id">
+    <input type="text" name="Password" placeholder="酒店管理员密码">
+    <input type="text" name="HotelId" placeholder="酒店管理员所属酒店">
+    <button type="submit" name="注册">注册酒店管理员</button>
+</form>
+    {% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+    {% endfor%}
+<hr>
+<h2>添加酒店</h2>
+<form action="/admin/add">
+    <input type="text" name="HotelId" placeholder="HotelId">
+    <input type="text" name="Name" placeholder="Name">
+    <input type="text" name="Address" placeholder="Address">
+    <input type="text" name="Phone" placeholder="Phone">
+    <input type="text" name="Intro" placeholder="Intro">
+    <button type="submit" name="注册">添加酒店</button>
+</form>
+<!--不用flash，用传参来反应成功与否-->
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif%}
+
+</body>
+</html>

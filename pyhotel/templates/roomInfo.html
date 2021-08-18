@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>roomInfo</title>
+</head>
+<body>
+<h2>这是room页面，可查看或者修改信息</h2>
+<form action="/logout">
+    <button name="back">注销</button>
+</form>
+
+
+{% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+{% endfor%}
+
+<form  method="post" action="/manager/roomupdate">
+{% if rooms %}
+    {%for room in rooms%}
+
+
+<label  class="sr-only">房间Id</label>
+    <input type="text" name="RoomId"  value="{{room.RoomId}}" placeholder="客户名" readonly="readonly">
+
+<label  class="sr-only">酒店Id</label>
+    <input type="text" name="HotelId"  value="{{room.HotelId}}" readonly="readonly">
+
+<label  class="sr-only">房间类型</label>
+    <input type="text" name="Type"  value="{{room.Type}}" > <br>
+
+<label  class="sr-only">房间价格</label>
+    <input type="text" id="price" name="roomPrice" value="{{room.Price}}" >
+
+<label  class="sr-only">可入住人数</label>
+    <input type="text" name="NumOfMan"  value="{{room.NumofMan}}" >
+
+<label  class="sr-only">房间数量</label>
+    <input type="text" name="NumofRoom"  value="{{room.NumofRoom}}"  >
+
+    <button name="confirm" value="{{room.RoomId}}"  >提交修改</button>
+<hr>
+
+    {%endfor%}
+{% endif%}
+</form>
+
+
+</body>
+</html>
