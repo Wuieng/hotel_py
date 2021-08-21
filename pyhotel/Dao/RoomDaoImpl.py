@@ -77,7 +77,7 @@ def UpdateHotel(Room):
 
     # SQL语句：插入，这里ID自增，所以不插入ID
     sql = "UPDATE  room  set type= %s, " \
-          "price = %d, NumofRoom= %d, NumofMan %d,  where roomId = %d"\
+          "price = %d, NumofRoom= %d, NumofMan =%d,  where roomId = %d"\
           %( Room.Type, Room.Price, Room.NumofRoom,Room.NumofMan,Room.RoomId)
     try:
         cursor.execute(sql)
@@ -117,6 +117,83 @@ def getRoomByRoomId(Id):
             global room
             room=Room(roomId,HotelId,type,price,NumofRoom,NumofMan)
         return room
+    except:
+        print('Uable to fetch data!')
+    # 关闭数据库连接
+    db.close()
+
+# 激活秒杀功能，注意这里只激活对应酒店管理员的room
+def activeFlashRoom(Id):
+    try:
+        db = pymysql.connect(host=Host, user=User, password=Pass, database=DbName)
+        print("数据库链接成功")
+    except pymysql.Error as e:
+        print("数据库链接异常" + e)
+
+    cursor = db.cursor()
+
+    # SQL语句：查询
+    sql = "UPDATE  room  set status = 1 where roomId = %d"%(Id)
+
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except:
+        db.rollback()
+    db.close()
+
+# 补货功能
+def patchRoom(Id,num):
+    try:
+        db = pymysql.connect(host=Host, user=User, password=Pass, database=DbName)
+        print("数据库链接成功")
+    except pymysql.Error as e:
+        print("数据库链接异常" + e)
+
+    cursor = db.cursor()
+
+    # SQL语句：查询
+    sql1 = "SELECT * FROM room where roomId = %d for update "%(Id)
+    sql2 = "UPDATE  room  set NumofRoom = NumofRoom+%d where roomId = %d"%(num,Id)
+
+    try:
+        cursor.execute(sql1)
+        cursor.execute(sql2)
+        db.commit()
+    except:
+        db.rollback()
+    db.close()
+
+def getFlashRoomById(HotelId):
+    try:
+        db = pymysql.connect(host=Host, user=User, password=Pass, database=DbName)
+        print("数据库链接成功")
+    except pymysql.Error as e:
+        print("数据库链接异常" + e)
+
+    cursor = db.cursor()
+
+    # SQL语句：查询
+    sql = "SELECT * FROM room where status = 1 and HotelId = %d "%(HotelId)
+
+    # 异常处理
+    try:
+        # 执行SQL语句
+        cursor.execute(sql)
+        # 获取所有的记录列表
+        results = cursor.fetchall()
+        # 一个酒店的所有房间类型
+        rooms=[]
+        for row in results:
+
+            roomId = row[0]
+            HotelId = row[1]
+            type = row[2]
+            price = row[3]
+            NumofRoom = row[4]
+            NumofMan = row[5]
+            rooms.append(Room(roomId,HotelId,type,price,NumofRoom,NumofMan))
+        return rooms
     except:
         print('Uable to fetch data!')
     # 关闭数据库连接

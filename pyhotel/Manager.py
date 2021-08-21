@@ -62,6 +62,7 @@ def roomact():
     # 后来改成post，发现可也可以用form取值
     # 这里其实也可以拿confirm的值，只不过我忘了
     hotelId = int(request.args.get('HotelId'))
+    # 这里的args实际是在url也就是query中取值
     rooms = RoomDaoImpl.getRoomById(hotelId)
     return render_template('roomInfo.html', rooms=rooms)
 
@@ -71,6 +72,11 @@ def update_room():
     print("========")
     print(request.method)
     # 前面前端某处指定get之后，后面就用不了post了
+    # 首先判断按钮，如果是激活那就直接激活然后return
+    if request.form.get('active') != None:
+        roomId = int(request.form.get('active'))
+        RoomDaoImpl.activeFlashRoom(roomId)
+        return redirect(url_for('logout'))
     roomId = int(request.form.get('confirm'))
     room = RoomDaoImpl.getRoomByRoomId(roomId)
     Type = request.form.get('Type')
@@ -96,3 +102,16 @@ def update_room():
 
     rooms = RoomDaoImpl.getRoomById(room.HotelId)
     return render_template('roomInfo.html', rooms=rooms)
+
+@manager.route('/patchRoom',methods=['GET','POST'])
+def patchRooms():
+    Num=int(request.form.get('Num'))
+    if Num == None or Num<=0:
+        flash("补货失败")
+    roomId=int(request.form.get('add'))
+    RoomDaoImpl.patchRoom(Id=roomId,num=Num)
+    HotelId=RoomDaoImpl.getRoomByRoomId(roomId).HotelId
+    rooms=RoomDaoImpl.getFlashRoomById(HotelId)
+    flash("补货成功")
+    return render_template('ManagerMain.html',HotelId=HotelId , rooms=rooms)
+

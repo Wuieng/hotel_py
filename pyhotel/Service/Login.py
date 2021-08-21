@@ -1,5 +1,6 @@
 from pyhotel.Dao import AdminDaoImpl
 from pyhotel.Dao import HotelManagerDaoImpl
+from pyhotel.Dao import RoomDaoImpl
 import pyhotel.Md5 as Md5
 # 要不要用类来完成后台操作是关键
 def Admlogin(Id,Password):
@@ -22,4 +23,7 @@ def Managerlogin(Id,Password):
 
 def GetManagerBy(Id):
     return HotelManagerDaoImpl.getManagerById(Id)
+
+def GetFlashRoom(Id):
+    return RoomDaoImpl.getFlashRoomById(HotelId=Id)
 

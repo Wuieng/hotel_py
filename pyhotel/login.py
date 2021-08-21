@@ -30,7 +30,7 @@ def login():
         if type == 'adm':
             if(Login.Admlogin(Id,Password)):
                 session['adm']=Id
-
+                #在session存入对应ID
                 return render_template('AdmMain.html')
             else:
                 flash("login failed")
@@ -40,8 +40,9 @@ def login():
             if (Login.Managerlogin(Id,Password)):
                 session['manager']=Id
                 manager=Login.GetManagerBy(Id)
+                rooms = Login.GetFlashRoom(manager.HotelId)
                 # session.get()
-                return render_template('ManagerMain.html',manager=manager)
+                return render_template('ManagerMain.html',HotelId=manager.HotelId,rooms=rooms)
             else:
                 flash("login failed")
                 return redirect(url_for('login'))

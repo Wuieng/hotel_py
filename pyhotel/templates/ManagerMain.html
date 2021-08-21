@@ -14,25 +14,46 @@
 <hr>
 <h2>查看或修改酒店信息</h2>
 <form  action="/manager/hotelact" >
-    <button name="HotelId" value="{{manager.HotelId}}">查看酒店信息</button>
+    <button name="HotelId" value="{{HotelId}}">查看酒店信息</button>
 </form>
 <hr>
 <h2>查看或修改客房信息</h2>
 <form action="/manager/roomact">
-    <button name="HotelId" value="{{manager.HotelId}}">查看酒店客房信息</button>
+    <button name="HotelId" value="{{HotelId}}">查看酒店客房信息</button>
 </form>
 
-
+<hr>
 <!--为了之后做多线程准备的-->
-<form >
-    <button name="start" >开抢</button>
-    <input name="Num" placeholder="补货量"   type="text" >
-    <button name="add" >补货</button>
-</form>
-<!--{% if rooms %}-->
-<!--    {%for room in rooms%}-->
+<!--这里等会展示一个表格-->
+<h2>秒杀room列表</h2>
+{% if rooms %}
+    {%for room in rooms%}
 
-<!--    {%endfor%}-->
-<!--{% endif%}-->
+<form >
+
+<label  class="sr-only">房间Id</label>
+    <input type="text" name="RoomId"  value="{{room.RoomId}}" placeholder="客户名" readonly="readonly">
+
+<label  class="sr-only">房间类型</label>
+    <input type="text" name="Type"  value="{{room.Type}}" readonly="readonly">
+
+<label  class="sr-only">房间价格</label>
+    <input type="text" id="price" name="roomPrice" value="{{room.Price}}" readonly="readonly">
+
+
+<label  class="sr-only">房间数量</label>
+    <input type="text" name="NumofRoom"  value="{{room.NumofRoom}}"  readonly="readonly">
+
+    <input name="Num" placeholder="补货量"   type="text" >
+    <button name="add" value="room.RoomId">补货</button>
+</form>
+
+
+    {%endfor%}
+{% endif%}
+
+{% for message in get_flashed_messages() %}
+    <p>{{message}}</p>
+{% endfor%}
 </body>
 </html>
